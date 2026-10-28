@@ -839,7 +839,7 @@ local VIPLicenseCore = (function()
             local requestId = generation
             pending = {id = requestId, key = key, serial = serial,
                        started = now, world = world, deadline = now + cfg.timeout}
-            notify('Signing in...', 'pending')
+            notify('Key Verifying...', 'pending')
             if not pending or pending.id ~= requestId or generation ~= requestId then return false end
             local body = 'game=' .. P.form_encode(cfg.game)
                 .. '&user_key=' .. P.form_encode(key)
@@ -852,7 +852,7 @@ local VIPLicenseCore = (function()
                     revoke('Request expired. Please sign in again.', 'error'); return
                 end
                 if success ~= true or type(raw) ~= 'string' or #raw == 0 or #raw > 32768 then
-                    revoke('Connection failed. Please try again.', 'error'); return
+                    revoke('KEY NOT REGISTER. Please try again.', 'error'); return
                 end
                 local ok, result = pcall(deps.decode, raw)
                 if not ok or type(result) ~= 'table' then
@@ -1203,18 +1203,18 @@ end)()
             panel(10,10,W-20,65,16,gold,4,24,1)
             panel(13,13,W-26,59,14,header,5,32,1)
             if welcome then
-                d.Title=text("Welcome to VIP Server",24,22,W-48,42,19,white,7,true,true)
+                d.Title=text("Welcome To Our Premium Pak",24,22,W-48,42,19,white,7,true,true)
                 local pw=math.min(340,W-72);local px=(W-pw)/2
                 panel(px,99,pw,51,12,gold,4,16)
                 panel(px+3,102,pw-6,45,10,{{179,29,52},{231,73,87},{178,26,47}},5,20)
-                d.Detail=text("Kill limit 8-10",px+16,109,pw-32,34,23,white,7,true,true)
-                d.Hint=text("Play smart and avoid report",30,165,W-60,32,17,forest,7,true,true)
+                d.Detail=text("No Kill Limit",px+16,109,pw-32,34,23,white,7,true,true)
+                d.Hint=text("TG @ZAKPUBGSKIN OWNER @ZAKARYA_OP",30,165,W-60,32,17,forest,7,true,true)
             else
-                d.Title=text("VIP Server",22,15,W-44,31,24,white,7,true,true)
-                text("LOGIN",22,45,W-44,21,12,white,7,true,true)
+                d.Title=text("WELCOME TO PREMIUM PAK",22,15,W-44,31,24,white,7,true,true)
+                text("ZAKPUBGSKIN",22,45,W-44,21,12,white,7,true,true)
                 line(W/2-118,56,W/2-47,56,1,color(251,244,228),7)
                 line(W/2+47,56,W/2+118,56,1,color(251,244,228),7)
-                text("LOGIN KEY",22,82,W-44,20,13,burgundy,7,true,false)
+                text("LOGIN PAGE",22,82,W-44,20,13,burgundy,7,true,false)
                 rail(27,104,W-54,2,gold,4,24)
                 rail(27,143,W-54,2,gold,4,24)
                 rect(20,111,2,27,color(188,108,59),4)
@@ -1258,8 +1258,8 @@ end)()
                 if type(setForeground)=="function" then setForeground(d.Input,fg) end
                 pcall(function() d.Input:SetHintText("Enter your key") end)
                 visibility(d.Input,enums.Visible);add(d.Input,23,107,W-46,35,8,true)
-                d.Hint=text("Your key is saved automatically",22,149,W-44,19,11,burgundy,7,false,false)
-                d.Status=text(status or "Enter your key",22,170,W-44,23,11,burgundy,8,false,false,true)
+                d.Hint=text("Your key saved automatically",22,149,W-44,19,11,burgundy,7,false,false)
+                d.Status=text(status or "Paste your key",22,170,W-44,23,11,burgundy,8,false,false,true)
             end
             local button=make("Button",d.Container);d.Button=button
             local by=welcome and 212 or 201;local bh=welcome and 42 or 34
@@ -1283,7 +1283,7 @@ end)()
                 local okRead,k=pcall(function() return d.Input:GetText() end)
                 if not okRead or type(k)~="string" then return end
                 k=k:match("^%s*(.-)%s*$")
-                if #k==0 or #k>512 then d.Status:SetText("Enter a valid key");return end
+                if #k==0 or #k>512 then d.Status:SetText("Paste a valid key");return end
                 if d.Submit then d.Submit(k) end
             end)
             renderArt()
@@ -1741,11 +1741,11 @@ do
         espSwitch(2,"Name","ESP NAME"),espSwitch(2,"Line","ESP LINE"),espSwitch(2,"Box","ESP BOX"),
         espSwitch(2,"Health","ESP HEALTH"),espSwitch(2,"Distance","ESP DISTANCE"),espSwitch(2,"Skeleton","ESP SKELETON"),espSwitch(2,"Counter","ESP COUNTER")}
     local Other={
-        {Key="LunarWall",UI=AliasMap.Switcher,Text="Wall Hack",ExpandIndex=0,EventType=F.ESPSettingsEventType,EventID=3,GetFunc=function() return featureState().Settings.WallEnabled end,
+        {Key="LunarWall",UI=AliasMap.Switcher,Text="PREMIUM WALLHACK",ExpandIndex=0,EventType=F.ESPSettingsEventType,EventID=3,GetFunc=function() return featureState().Settings.WallEnabled end,
             SetFunc=function(c,v) featureState().SetWall(value(c,v));return true end},
-        {Key="LunarIpad",UI=AliasMap.Switcher,Text="iPad View",ExpandIndex=0,GetFunc=function() return _G.LexusConfig.IpadView end,
+        {Key="LunarIpad",UI=AliasMap.Switcher,Text="IPAD VIEW",ExpandIndex=0,GetFunc=function() return _G.LexusConfig.IpadView end,
             SetFunc=function(c,v) featureState().SetIpad(value(c,v));return true end},
-        {Key="LunarAim",UI=AliasMap.Switcher,Text="Aimbot V1",ExpandIndex=0,
+        {Key="LunarAim",UI=AliasMap.Switcher,Text="PREMIUM AIMBOT",ExpandIndex=0,
             EventType=F.AimSettingsEventType,EventID=F.AimSettingsEventID,
             GetFunc=function() return featureState().Settings.AimEnabled end,
             SetFunc=function(c,v) featureState().SetAim(value(c,v));return true end}
@@ -1773,10 +1773,10 @@ do
         SwitcherText={"Head","Body","Leg"},SwitcherValue={1,2,3},
         GetFunc=function() return featureState().Settings.AimTarget end,
         SetFunc=function(c,v) featureState().SetAimTarget(value(c,v));return true end}
-    Other[#Other+1]={Key="LunarAim2",UI=AliasMap.Switcher,Text="Aimbot V2",
-        EventType=F.AimSettingsEventType,EventID=F.AimSettingsEventID,
-        GetFunc=function() return featureState().Settings.Aim2Enabled end,
-        SetFunc=function(c,v) featureState().SetAim2(value(c,v));return true end}
+    --Other[#Other+1]={Key="LunarAim2",UI=AliasMap.Switcher,Text="Aimbot V2",
+     --   EventType=F.AimSettingsEventType,EventID=F.AimSettingsEventID,
+      --  GetFunc=function() return featureState().Settings.Aim2Enabled end,
+      --  SetFunc=function(c,v) featureState().SetAim2(value(c,v));return true end}
     Other[#Other+1]={Key="LunarMortarAim",UI=AliasMap.Switcher,Text="Mortar aim",
         GetFunc=function() return featureState().Settings.MortarEnabled end,
         SetFunc=function(c,v) featureState().SetMortar(value(c,v));return true end}
@@ -1789,10 +1789,10 @@ do
             GetFunc=function() return featureState().Settings[key] end,
             SetFunc=function(c,v) return featureState().SetWallColor(key,value(c,v)) end})
     end
-    local page={Key="HackMenu",Text="Hack menu",UIKey="Setting_Page_Privacy",Category={
+    local page={Key="HackMenu",Text="PREMIUM MENU @ZAKPUBGSKIN",UIKey="Setting_Page_Privacy",Category={
         {Key="Lunar_ESP_V1",Text="ESP V1",Stack=V1},
-        {Key="Lunar_ESP_V2",Text="ESP V2",Stack=V2},
-        {Key="Lunar_Other",Text="Other Features",Stack=Other}
+        {Key="Lunar_ESP_V2",Text="PREMIUM ESP",Stack=V2},
+        {Key="Lunar_Other",Text="EXTRA FEATURES",Stack=Other}
     }}
 
         return page
